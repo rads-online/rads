@@ -27,6 +27,30 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+
+// app.get('/delete',async (req,res)=>{
+//   try{
+//     await prisma.user.deleteMany({
+//       where:{
+//         role:
+//         {
+//           not: 'ADMIN'
+//         }
+//       }
+//     })
+//     return res.status(200).json({message: 'Deleted all users except admin'})
+
+
+
+//   }
+//   catch(err){
+//     console.error(err)
+//     return res.status(500).json({message: 'Error deleting users'})
+//   }
+
+
+// })
+
 // Start server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
