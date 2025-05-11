@@ -33,6 +33,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { BACKEND_URL } from '../config';
+
+
 
 function TabPanel({ children, value, index }) {
   return (
@@ -72,7 +75,7 @@ function AdminDashboard() {
 
   const fetchBrands = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/brands/admin');
+      const response = await axios.get(`${BACKEND_URL}/api/brands/admin`);
       setBrands(response.data);
     } catch (error) {
       console.error('Error fetching brands:', error);
@@ -82,7 +85,7 @@ function AdminDashboard() {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/products/pending');
+      const response = await axios.get(`${BACKEND_URL}/api/products/pending`);
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -96,7 +99,7 @@ function AdminDashboard() {
 
   const handleBrandStatusUpdate = async (brandId, newStatus) => {
     try {
-      await axios.patch(`http://localhost:5000/api/brands/${brandId}/status`, {
+      await axios.patch(`${BACKEND_URL}/api/brands/${brandId}/status`, {
         status: newStatus,
       });
       fetchBrands();
@@ -108,7 +111,7 @@ function AdminDashboard() {
 
   const handleProductStatusUpdate = async (productId, newStatus) => {
     try {
-      await axios.patch(`http://localhost:5000/api/products/${productId}/status`, {
+      await axios.patch(`${BACKEND_URL}/api/products/${productId}/status`, {
         status: newStatus,
       });
       fetchProducts();
@@ -138,10 +141,10 @@ function AdminDashboard() {
   const handleEditSubmit = async () => {
     try {
       if (selectedItem.type === 'product') {
-        await axios.put(`http://localhost:5000/api/products/${selectedItem.id}`, editForm);
+        await axios.put(`${BACKEND_URL}/api/products/${selectedItem.id}`, editForm);
         fetchProducts();
       } else {
-        await axios.put(`http://localhost:5000/api/brands/${selectedItem.id}`, {
+        await axios.put(`${BACKEND_URL}/api/brands/${selectedItem.id}`, {
           name: editForm.name,
           description: editForm.description,
         });
@@ -158,10 +161,10 @@ function AdminDashboard() {
   const handleDeleteConfirm = async () => {
     try {
       if (selectedItem.type === 'product') {
-        await axios.delete(`http://localhost:5000/api/products/${selectedItem.id}`);
+        await axios.delete(`${BACKEND_URL}/api/products/${selectedItem.id}`);
         fetchProducts();
       } else {
-        await axios.delete(`http://localhost:5000/api/brands/${selectedItem.id}`);
+        await axios.delete(`${BACKEND_URL}/api/brands/${selectedItem.id}`);
         fetchBrands();
       }
       setOpenDeleteDialog(false);
