@@ -17,7 +17,7 @@ const ForgotPassword = () => {
     const handleForgotPassword = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${BACKEND_URL}/auth/forgot-password`, { email });
+            const response = await axios.post(`${BACKEND_URL}/api/auth/forgot-password`, { email });
             setMessage(response.data.message);
             setError('');
             setShowOTPForm(true);
@@ -30,7 +30,7 @@ const ForgotPassword = () => {
     const handleVerifyOTP = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${BACKEND_URL}/auth/verify-otp`, { email, otp });
+            const response = await axios.post(`${BACKEND_URL}/api/auth/verify-otp`, { email, otp });
             setMessage(response.data.message);
             setError('');
             setResetToken(response.data.resetToken);
@@ -47,7 +47,7 @@ const ForgotPassword = () => {
             return;
         }
         try {
-            const response = await axios.post(`${BACKEND_URL}/auth/reset-password`, {
+            const response = await axios.post(`${BACKEND_URL}/api/auth/reset-password`, {
                 resetToken,
                 newPassword
             });

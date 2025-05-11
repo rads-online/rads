@@ -17,7 +17,7 @@ const generateOTP = () => {
 // Send OTP email
 const sendOTPEmail = async (email, otp) => {
     const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: process.env.EMAIL_USER ,
         to: email,
         subject: 'Password Reset OTP',
         html: `
