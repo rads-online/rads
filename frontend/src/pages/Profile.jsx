@@ -22,6 +22,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import BadgeIcon from '@mui/icons-material/Badge';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { useAuth } from '../contexts/AuthContext';
+import { BACKEND_URL } from '../config';
 
 function Profile() {
   const { user } = useAuth();
@@ -47,9 +48,9 @@ function Profile() {
   const fetchSellerStats = async () => {
     try {
       const [brandsResponse, productsResponse, requestsResponse] = await Promise.all([
-        fetch('http://localhost:5000/api/brands/my-brands'),
-        fetch('http://localhost:5000/api/products/my-products'),
-        fetch('http://localhost:5000/api/brands/pending')
+        fetch(`${BACKEND_URL}/api/brands/my-brands`),
+        fetch(`${BACKEND_URL}/api/products/my-products`),
+        fetch(`${BACKEND_URL}/api/brands/pending`)
       ]);
 
       const brands = await brandsResponse.json();

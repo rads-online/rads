@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
+import { BACKEND_URL } from '../config';
 
 function ProductDetail() {
   const { id } = useParams();
@@ -26,7 +27,7 @@ function ProductDetail() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/products/${id}`);
+        const response = await axios.get(`{BACKEND_URL}/api/products/${id}`);
         setProduct(response.data);
       } catch (error) {
         setError('Error loading product details');

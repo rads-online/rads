@@ -24,6 +24,8 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { BACKEND_URL } from '../config';
+
 
 function Home() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -33,10 +35,11 @@ function Home() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/products');
+        const response = await axios.get(`${BACKEND_URL}/api/products`);
         setFeaturedProducts(response.data.slice(0, 8)); // Show first 8 products
       } catch (error) {
         console.error('Error fetching products:', error);

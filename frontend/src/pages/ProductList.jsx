@@ -28,6 +28,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { BACKEND_URL } from '../config';
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -54,7 +55,7 @@ function ProductList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/products');
+        const response = await axios.get(`${BACKEND_URL}/api/products`);
         setProducts(response.data);
         setFilteredProducts(response.data);
       } catch (error) {
@@ -65,7 +66,7 @@ function ProductList() {
 
     const fetchBrands = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/brands');
+        const response = await axios.get(`${BACKEND_URL}/api/brands`);
         // Only include approved brands
         const approvedBrands = response.data.filter(brand => brand.status === 'APPROVED');
         setBrands(approvedBrands);
@@ -137,9 +138,9 @@ function ProductList() {
 
   const handleEditSubmit = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/products/${selectedProduct.id}`, editForm);
+      await axios.put(`${BACKEND_URL}/api/products/${selectedProduct.id}`, editForm);
       // Refresh products after edit
-      const response = await axios.get('http://localhost:5000/api/products');
+      const response = await axios.get('${BACKEND_URL}/api/products');
       setProducts(response.data);
       setFilteredProducts(response.data);
       setOpenEditDialog(false);
@@ -152,9 +153,9 @@ function ProductList() {
 
   const handleDeleteConfirm = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/products/${selectedProduct.id}`);
+      await axios.delete(`${BACKEND_URL}/api/products/${selectedProduct.id}`);
       // Refresh products after delete
-      const response = await axios.get('http://localhost:5000/api/products');
+      const response = await axios.get('${BACKEND_URL}/api/products');
       setProducts(response.data);
       setFilteredProducts(response.data);
       setOpenDeleteDialog(false);

@@ -20,6 +20,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { BACKEND_URL } from '../config';
 
 function MyInterests() {
   const [interests, setInterests] = useState([]);
@@ -40,7 +41,7 @@ function MyInterests() {
 
   const fetchInterests = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/interests/my-interests');
+      const response = await axios.get(`${BACKEND_URL}/api/interests/my-interests`);
       setInterests(response.data);
     } catch (error) {
       console.error('Error fetching interests:', error);
@@ -60,7 +61,7 @@ function MyInterests() {
 
   const handleRemoveInterest = async (productId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/interests/${productId}`);
+      await axios.delete(`${BACKEND_URL}/api/interests/${productId}`);
       fetchInterests();
     } catch (error) {
       console.error('Error removing interest:', error);

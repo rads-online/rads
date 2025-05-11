@@ -33,6 +33,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { BACKEND_URL } from '../config';
 
 function TabPanel({ children, value, index }) {
   return (
@@ -102,7 +103,7 @@ function SellerDashboard() {
 
   const fetchBrands = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/brands/my-brands');
+      const response = await axios.get(`${BACKEND_URL}/api/brands/my-brands`);
       setBrands(response.data);
     } catch (error) {
       console.error('Error fetching brands:', error);
@@ -111,7 +112,7 @@ function SellerDashboard() {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/products/my-products');
+      const response = await axios.get(`${BACKEND_URL}/api/products/my-products`);
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -121,8 +122,8 @@ function SellerDashboard() {
   const fetchRequests = async () => {
     try {
       const [brandsResponse, productsResponse] = await Promise.all([
-        axios.get('http://localhost:5000/api/brands/pending'),
-        axios.get('http://localhost:5000/api/products/pending')
+        axios.get(`${BACKEND_URL}/api/brands/pending`),
+        axios.get(`${BACKEND_URL}/api/products/pending`)
       ]);
       setRequests({
         brands: brandsResponse.data,
@@ -143,7 +144,7 @@ function SellerDashboard() {
 
   const handleBrandSubmit = async () => {
     try {
-      await axios.post('http://localhost:5000/api/brands', newBrand);
+      await axios.post(`${BACKEND_URL}/api/brands`, newBrand);
       setOpenBrandDialog(false);
       setNewBrand({ name: '', description: '' });
       fetchBrands();
@@ -160,7 +161,7 @@ function SellerDashboard() {
         keywords: newProduct.keywords.split(',').map(keyword => keyword.trim()).filter(keyword => keyword !== '')
       };
       
-      await axios.post('http://localhost:5000/api/products', productData);
+      await axios.post(`${BACKEND_URL}/api/products`, productData);
       setOpenProductDialog(false);
       setNewProduct({
         name: '',
