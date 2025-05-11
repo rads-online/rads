@@ -2,6 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { BACKEND_URL } from '../config';
+import {
+    Container,
+    Typography,
+    TextField,
+    Button,
+    Alert,
+    Box
+} from '@mui/material';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -53,7 +61,6 @@ const ForgotPassword = () => {
             });
             setMessage(response.data.message);
             setError('');
-            // Redirect to login after successful password reset
             setTimeout(() => navigate('/login'), 2000);
         } catch (error) {
             setError(error.response?.data?.message || 'Error resetting password');
@@ -62,112 +69,99 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8">
-                <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Forgot Password
-                    </h2>
-                </div>
+        <Container maxWidth="xs">
+            <Box display="flex" flexDirection="column" alignItems="center" mt={8}>
+                <Typography variant="h4" component="h1" gutterBottom>
+                    Forgot Password
+                </Typography>
+
                 {!showOTPForm ? (
-                    <form className="mt-8 space-y-6" onSubmit={handleForgotPassword}>
-                        <div>
-                            <label htmlFor="email" className="sr-only">Email address</label>
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                required
-                                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Email address"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <button
-                                type="submit"
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Send OTP
-                            </button>
-                        </div>
-                    </form>
+                    <Box component="form" onSubmit={handleForgotPassword} mt={2} width="100%">
+                        <TextField
+                            fullWidth
+                            required
+                            label="Email Address"
+                            type="email"
+                            margin="normal"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            sx={{ mt: 2 }}
+                        >
+                            Send OTP
+                        </Button>
+                    </Box>
                 ) : !resetToken ? (
-                    <form className="mt-8 space-y-6" onSubmit={handleVerifyOTP}>
-                        <div>
-                            <label htmlFor="otp" className="sr-only">OTP</label>
-                            <input
-                                id="otp"
-                                name="otp"
-                                type="text"
-                                required
-                                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Enter OTP"
-                                value={otp}
-                                onChange={(e) => setOtp(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <button
-                                type="submit"
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Verify OTP
-                            </button>
-                        </div>
-                    </form>
+                    <Box component="form" onSubmit={handleVerifyOTP} mt={2} width="100%">
+                        <TextField
+                            fullWidth
+                            required
+                            label="Enter OTP"
+                            type="text"
+                            margin="normal"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                        />
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            sx={{ mt: 2 }}
+                        >
+                            Verify OTP
+                        </Button>
+                    </Box>
                 ) : (
-                    <form className="mt-8 space-y-6" onSubmit={handleResetPassword}>
-                        <div>
-                            <label htmlFor="newPassword" className="sr-only">New Password</label>
-                            <input
-                                id="newPassword"
-                                name="newPassword"
-                                type="password"
-                                required
-                                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="New Password"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="confirmPassword" className="sr-only">Confirm Password</label>
-                            <input
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                type="password"
-                                required
-                                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Confirm Password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <button
-                                type="submit"
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Reset Password
-                            </button>
-                        </div>
-                    </form>
+                    <Box component="form" onSubmit={handleResetPassword} mt={2} width="100%">
+                        <TextField
+                            fullWidth
+                            required
+                            label="New Password"
+                            type="password"
+                            margin="normal"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                        <TextField
+                            fullWidth
+                            required
+                            label="Confirm Password"
+                            type="password"
+                            margin="normal"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            sx={{ mt: 2 }}
+                        >
+                            Reset Password
+                        </Button>
+                    </Box>
                 )}
+
                 {message && (
-                    <div className="rounded-md bg-green-50 p-4">
-                        <div className="text-sm text-green-700">{message}</div>
-                    </div>
+                    <Alert severity="success" sx={{ mt: 2, width: '100%' }}>
+                        {message}
+                    </Alert>
                 )}
                 {error && (
-                    <div className="rounded-md bg-red-50 p-4">
-                        <div className="text-sm text-red-700">{error}</div>
-                    </div>
+                    <Alert severity="error" sx={{ mt: 2, width: '100%' }}>
+                        {error}
+                    </Alert>
                 )}
-            </div>
-        </div>
+            </Box>
+        </Container>
     );
 };
 
-export default ForgotPassword; 
+export default ForgotPassword;
